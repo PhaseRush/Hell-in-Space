@@ -9,14 +9,14 @@ public class UpwardStar extends Star{
     }
 
     @Override
-    void update(){
-        move();
+    void update(float delta){
+        move(delta);
         super.twinkle();
     }
 
     @Override
-    void move(){
-        y += v;
+    void move(float delta){
+        y += v*delta;
         if (y > Gdx.graphics.getHeight()) {
             y = 0; //could also randomize x
             x = r.nextInt(Gdx.graphics.getWidth());

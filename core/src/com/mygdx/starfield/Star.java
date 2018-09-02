@@ -17,11 +17,11 @@ public abstract class Star {
 
     public Star(){
         x = r.nextInt(Gdx.graphics.getWidth());
-        v = r.nextFloat()*3;
+        v = r.nextFloat()*100; //use Math.max here for "jumpy" startrails
         //y = Gdx.graphics.getHeight();
         y = r.nextInt(Gdx.graphics.getHeight());
 
-        int length = r.nextInt(3) + (int)v/2; //slightly favor closer = bigger
+        int length = r.nextInt(3) + (int)v/50; //slightly favor closer = bigger
         width = length;
         height = length;
 
@@ -29,8 +29,8 @@ public abstract class Star {
         starTexture = generateTexture();
     }
 
-    void update(){
-        move();
+    void update(float delta){
+        move(delta);
         twinkle();
     }
 
@@ -40,8 +40,8 @@ public abstract class Star {
     protected void twinkle() {
     }
 
-    void move(){
-        y -= v;
+    void move(float delta){
+        y -= v * delta;
         if (y < 0) {
             y = Gdx.graphics.getHeight(); //could also randomize x
             x = r.nextInt(Gdx.graphics.getWidth());

@@ -3,16 +3,15 @@ package com.mygdx.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.hellinspace.GameMain;
 import com.mygdx.starfield.Starfield;
+import com.mygdx.starfighter.StandardFighter;
+import com.mygdx.starfighter.Starfighter;
 
 public class GameScreen implements Screen {
     final GameMain game;
 
     int frameCount = 0;
-    Texture backgroundFadeRect;
     Starfield starfield;
 
     OrthographicCamera camera;
@@ -20,29 +19,20 @@ public class GameScreen implements Screen {
     int gameWidth = Gdx.graphics.getWidth();
     int gameHeight = Gdx.graphics.getHeight();
 
+    Starfighter fighter;
+
     public GameScreen(final GameMain game) {
         this.game = game;
         starfield = new Starfield(game.batch);
-        initBackgroundFadeRect();
         //load textures/sprites/sounds here
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, gameWidth, gameHeight); //might be problem
+
+
+        //stuff that probably shouldn't be here but is anyways
+        fighter = new StandardFighter();
     }
-
-
-
-    private void initBackgroundFadeRect(){
-        int gameWidth = Gdx.graphics.getWidth();
-        int gameHeight = Gdx.graphics.getHeight();
-
-        Pixmap pixmap = new Pixmap(gameWidth, gameHeight, Pixmap.Format.RGBA8888);
-        pixmap.setColor(0,0,0, 0.25f); //change alpha to determine fade amount
-        pixmap.fillRectangle(0,0, gameWidth, gameHeight);
-        backgroundFadeRect = new Texture(pixmap);
-        pixmap.dispose();
-    }
-
 
     @Override
     public void show() {
@@ -51,11 +41,15 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        //clears screen every time
+//        Gdx.gl.glClearColor(0,0,0,1);
+//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         game.batch.begin();
 
-        starfield.show();
-        game.batch.draw(backgroundFadeRect,0,0);
-
+        starfield.show(delta);
+        fighter.update(delta);
+        game.batch.draw(fighter.getFighterSprite(), fighter.getPos().x, fighter.getPos().y);
 
         game.batch.end();
 
@@ -65,7 +59,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
@@ -86,6 +79,5 @@ public class GameScreen implements Screen {
     @Override
 	public void dispose () {
 		game.batch.dispose();
-		backgroundFadeRect.dispose();
 	}
 }

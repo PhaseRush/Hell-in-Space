@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 
 public abstract class Bullet {
     protected float x, y, vx, vy;
@@ -33,9 +34,12 @@ public abstract class Bullet {
 
     abstract void move();
 
-
-    protected Texture getBulletTexture(){
+    public Texture getBulletTexture(){
         return bulletTexture;
+    }
+
+    public Rectangle getBulletAsRectangle() {
+        return new Rectangle(x, y, width, height);
     }
 
     private void generateTexture(){
