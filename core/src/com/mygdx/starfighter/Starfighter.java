@@ -8,7 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.projectiles.Bullet;
 
 public abstract class Starfighter {
-    private int MAX_X_SPEED, MAX_Y_SPEED, MAX_X_ACCEL, MAX_Y_ACCEL;
+    private int maxXSpeed, maxYSpeed, maxXAccel, maxYAccel, maxRotAccel, maxRotSpeed, angularFriction;
+    private float linearFriction;
+
 
     Texture fighterSprite;
     Rectangle rectangularRepresentation;
@@ -16,6 +18,8 @@ public abstract class Starfighter {
     Vector2 pos = new Vector2();
     Vector2 v = new Vector2();
     Vector2 a = new Vector2();
+
+    float bearing;
 
     int width, height, clock;
 
@@ -36,11 +40,16 @@ public abstract class Starfighter {
         v.x = 0;
         v.y = 0;
         clock = 0;
+        bearing = 0;
 
-        MAX_X_SPEED = 15;
-        MAX_Y_SPEED = 15;
-        MAX_X_ACCEL = 5;
-        MAX_Y_ACCEL = 5;
+        maxXSpeed = 15;
+        maxYSpeed = 15;
+        maxXAccel = 5;
+        maxYAccel = 5;
+        maxRotSpeed = 10;
+        maxRotAccel = 10;
+        linearFriction = .5f;
+        angularFriction = 1;
 
 
     }
@@ -52,31 +61,44 @@ public abstract class Starfighter {
 
     //based on this http://steigert.blogspot.com/2012/05/11-libgdx-tutorial-vectors.html
     private void move(float delta){
+        //handle rotation
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+            bearing += maxRotAccel * delta;
+        }
+
+
+
         if (Gdx.input.isKeyPressed(Input.Keys.A))
-            a.x = -MAX_X_ACCEL * delta;
+            a.x = -maxXAccel * delta;
         else if (Gdx.input.isKeyPressed(Input.Keys.D))
-            a.x = MAX_X_ACCEL * delta;
+            a.x = maxXAccel * delta;
         else a.x = 0;
 
-
         if (Gdx.input.isKeyPressed(Input.Keys.W))
-            a.y = MAX_Y_ACCEL * delta;
+            a.y = maxYAccel * delta;
         else if (Gdx.input.isKeyPressed(Input.Keys.S))
-            a.y = - MAX_Y_ACCEL * delta;
+            a.y = -maxYAccel * delta;
         else a.y = 0;
+
+        //friction -todo
+        float vMag = v.len();
+        if (vMag > 0) {
+            v.x -= (v.x/vMag) * linearFriction * delta;
+            v.y -= (v.y/vMag) * linearFriction * delta;
+        }
 
         v.add(a);
 
         //check if velocity is within bound
         //todo, maybe flash screen red if hit max v
         if (v.x < 0)
-            v.x = Math.max(v.x, - MAX_X_SPEED);
+            v.x = Math.max(v.x, -maxXSpeed);
         else if (v.x > 0)
-            v.x = Math.min(v.x, MAX_X_SPEED);
+            v.x = Math.min(v.x, maxXSpeed);
         if (v.y < 0)
-            v.y = Math.max(v.y, - MAX_Y_SPEED);
+            v.y = Math.max(v.y, -maxYSpeed);
         else if (v.y > 0)
-            v.y = Math.min(v.y, MAX_Y_SPEED);
+            v.y = Math.min(v.y, maxYSpeed);
 
         pos.add(v);
 
