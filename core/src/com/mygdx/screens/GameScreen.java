@@ -36,7 +36,7 @@ public class GameScreen implements Screen {
         fighter = new StandardFighter(game);
 
         //init update manager
-        updateManager = new Manager(game);
+        updateManager = new Manager(game, fighter);
     }
 
     @Override

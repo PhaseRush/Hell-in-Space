@@ -12,7 +12,7 @@ import com.mygdx.util.Updatable;
 
 public abstract class Bullet implements Disposable, Updatable {
     private GameMain game;
-    protected float bearing;
+    protected float bearing, damageValue;
     protected Vector2 pos, v;
 
     protected boolean isAlive, isGood;
@@ -26,7 +26,7 @@ public abstract class Bullet implements Disposable, Updatable {
 
     protected Circle circularRepresentation;
 
-    public Bullet(GameMain game, float x, float y, float vx, float vy, boolean isGood, float bearing){
+    public Bullet(GameMain game, float x, float y, float vx, float vy, boolean isGood, float bearing, float damageValue){
         this.game = game;
         width = 10;
 
@@ -39,6 +39,7 @@ public abstract class Bullet implements Disposable, Updatable {
         v.y = vy;
 
         this.bearing = bearing;
+        this.damageValue = damageValue;
         this.isGood = isGood;
         isAlive = true;
 
@@ -58,11 +59,11 @@ public abstract class Bullet implements Disposable, Updatable {
         render(delta);
     }
 
-    protected void render(float delta) {
+    public void render(float delta) {
         game.batch.draw(bulletTexture, pos.x, pos.y);
     }
 
-    private void move(float delta) {
+    public void move(float delta) {
         pos.mulAdd(v, delta);
     }
 
@@ -85,6 +86,14 @@ public abstract class Bullet implements Disposable, Updatable {
 
     public Circle getBulletAsCircle() {
         return circularRepresentation;
+    }
+
+    public boolean isGood() {
+        return isGood;
+    }
+
+    public float getDamageValue() {
+        return damageValue;
     }
 
     @Override

@@ -15,7 +15,11 @@ import com.mygdx.util.Updatable;
 
 public abstract class Starfighter implements Disposable, Updatable {
     private GameMain game;
+    //movement
     private float maxXSpeed, maxYSpeed, maxXAccel, maxYAccel, maxRotAccel, maxRotSpeed, angularFriction, linearFriction;
+
+    //other
+    private float projectileDamage;
 
     private int health; //might add shield mechanic
 
@@ -51,7 +55,9 @@ public abstract class Starfighter implements Disposable, Updatable {
         bearing = 0;
 
         health = 100;
+        projectileDamage = 10;
 
+        //movement
         maxXSpeed = 15;
         maxYSpeed = 15;
         maxXAccel = 5;
@@ -70,9 +76,8 @@ public abstract class Starfighter implements Disposable, Updatable {
     }
 
     private void shoot() { //just add to the updateManager
-        Bullet b = new StandardBullet(game, pos.x, pos.y, true);
+        Bullet b = new StandardBullet(game, pos.x, pos.y, true, projectileDamage);
         GameScreen.updateManager.add(b);
-        System.out.println("Added Bullet: " + b.toString());
     }
 
     //based on this http://steigert.blogspot.com/2012/05/11-libgdx-tutorial-vectors.html
@@ -80,10 +85,10 @@ public abstract class Starfighter implements Disposable, Updatable {
         //handle rotation
         if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
             bearing += maxRotAccel * delta;
-            System.out.println("Q: bearing: %+.02f" + bearing);
+            System.out.println("Q: bearing: " + bearing);
         } else if (Gdx.input.isKeyPressed(Input.Keys.E)) {
             bearing -= maxRotAccel * delta;
-            System.out.println("E: bearing: %+.02f" + bearing);
+            System.out.println("E: bearing: " + bearing);
         }
 
 
@@ -142,6 +147,13 @@ public abstract class Starfighter implements Disposable, Updatable {
     public boolean checkCollision(Bullet b) {
         return Intersector.overlaps(b.getBulletAsCircle(), rectangularRepresentation);
         //return rectangularRepresentation.overlaps(b.getBulletAsCircle()); //bullet not circle anymore.
+    }
+
+    public void decreaseHealth() {
+        health--; //or whatever
+    }
+    public void decreaseHealth(float f) {
+        health -= f;
     }
 
     public Texture getFighterSprite() {
