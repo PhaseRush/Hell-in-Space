@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.hellinspace.GameMain;
+import com.mygdx.managers.Manager;
 import com.mygdx.starfield.Starfield;
 import com.mygdx.starfighter.StandardFighter;
 import com.mygdx.starfighter.Starfighter;
@@ -20,6 +21,7 @@ public class GameScreen implements Screen {
     int gameHeight = Gdx.graphics.getHeight();
 
     Starfighter fighter;
+    public static Manager updateManager;
 
     public GameScreen(final GameMain game) {
         this.game = game;
@@ -31,7 +33,10 @@ public class GameScreen implements Screen {
 
 
         //stuff that probably shouldn't be here but is anyways
-        fighter = new StandardFighter();
+        fighter = new StandardFighter(game);
+
+        //init update manager
+        updateManager = new Manager(game);
     }
 
     @Override
@@ -45,13 +50,17 @@ public class GameScreen implements Screen {
 //        Gdx.gl.glClearColor(0,0,0,1);
 //        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.batch.begin();
+        game.batch.begin(); //start
 
         starfield.show(delta);
         fighter.update(delta);
         game.batch.draw(fighter.getFighterSprite(), fighter.getPos().x, fighter.getPos().y);
 
-        game.batch.end();
+        //updatable manager
+        updateManager.update(delta);
+
+
+        game.batch.end(); //end
 
         //other stuff to do each frame
         frameCount++;

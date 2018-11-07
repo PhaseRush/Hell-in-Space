@@ -3,14 +3,21 @@ package com.mygdx.starfighter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.hellinspace.GameMain;
 import com.mygdx.projectiles.Bullet;
+import com.mygdx.projectiles.StandardBullet;
+import com.mygdx.screens.GameScreen;
+import com.mygdx.util.Updatable;
 
-public abstract class Starfighter {
-    private int maxXSpeed, maxYSpeed, maxXAccel, maxYAccel, maxRotAccel, maxRotSpeed, angularFriction;
-    private float linearFriction;
+public abstract class Starfighter implements Disposable, Updatable {
+    private GameMain game;
+    private float maxXSpeed, maxYSpeed, maxXAccel, maxYAccel, maxRotAccel, maxRotSpeed, angularFriction, linearFriction;
 
+    private int health; //might add shield mechanic
 
     Texture fighterSprite;
     Rectangle rectangularRepresentation;
@@ -29,7 +36,8 @@ public abstract class Starfighter {
     int gameWidth = Gdx.graphics.getWidth();
     int gameHeight = Gdx.graphics.getHeight();
 
-    public Starfighter(){
+    public Starfighter(GameMain game){
+        this.game = game;
         fighterSprite = new Texture(Gdx.files.internal("StandardFighter.png"));
         width = fighterSprite.getWidth();
         height = fighterSprite.getHeight();
@@ -42,6 +50,8 @@ public abstract class Starfighter {
         clock = 0;
         bearing = 0;
 
+        health = 100;
+
         maxXSpeed = 15;
         maxYSpeed = 15;
         maxXAccel = 5;
@@ -50,13 +60,19 @@ public abstract class Starfighter {
         maxRotAccel = 10;
         linearFriction = .5f;
         angularFriction = 1;
-
-
     }
 
     public void update(float delta){
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) shoot();
+
         move(delta);
         clock++;
+    }
+
+    private void shoot() { //just add to the updateManager
+        Bullet b = new StandardBullet(game, pos.x, pos.y, true);
+        GameScreen.updateManager.add(b);
+        System.out.println("Added Bullet: " + b.toString());
     }
 
     //based on this http://steigert.blogspot.com/2012/05/11-libgdx-tutorial-vectors.html
@@ -64,8 +80,11 @@ public abstract class Starfighter {
         //handle rotation
         if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
             bearing += maxRotAccel * delta;
+            System.out.println("Q: bearing: %+.02f" + bearing);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+            bearing -= maxRotAccel * delta;
+            System.out.println("E: bearing: %+.02f" + bearing);
         }
-
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.A))
@@ -80,7 +99,7 @@ public abstract class Starfighter {
             a.y = -maxYAccel * delta;
         else a.y = 0;
 
-        //friction -todo
+        //friction aka "retrothrusters"
         float vMag = v.len();
         if (vMag > 0) {
             v.x -= (v.x/vMag) * linearFriction * delta;
@@ -121,7 +140,8 @@ public abstract class Starfighter {
     }
 
     public boolean checkCollision(Bullet b) {
-        return rectangularRepresentation.overlaps(b.getBulletAsRectangle());
+        return Intersector.overlaps(b.getBulletAsCircle(), rectangularRepresentation);
+        //return rectangularRepresentation.overlaps(b.getBulletAsCircle()); //bullet not circle anymore.
     }
 
     public Texture getFighterSprite() {
@@ -130,5 +150,13 @@ public abstract class Starfighter {
 
     public Vector2 getPos() {
         return pos;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void dispose(){
+        //stuff;
     }
 }
