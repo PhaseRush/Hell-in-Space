@@ -1,6 +1,7 @@
 package com.mygdx.managers;
 
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.enemies.Enemy;
 import com.mygdx.hellinspace.GameMain;
 import com.mygdx.projectiles.Bullet;
 import com.mygdx.starfighter.Starfighter;
@@ -20,6 +21,8 @@ public class Manager implements Updatable, Disposable {
     }
     @Override
     public void update(float delta) {
+        List<Updatable> toRemove = new ArrayList<>(); //list of objects to remove
+
         for (Updatable object : objects) {
             object.update(delta);
             //bullets
@@ -31,14 +34,20 @@ public class Manager implements Updatable, Disposable {
                     }
                 } else { //check enemies collision
                     //could easily optimize with x and vx etc.
-                    List<Bullet> toRemove;
-
+                     // = something
+                    for (Updatable enenmy : objects) {
+                        if (enenmy instanceof Enemy) {
+                            if (((Enemy) enenmy).checkCollision((Bullet) object)) {
+                                toRemove.add(object); //remove bullet
+                                //decrease enemy health
+                                //put explosion, etc
+                            }
+                        }
+                    }
                 }
             }
-
-
         }
-
+        objects.removeAll(toRemove);
     }
 
     public void add (Updatable up) {
