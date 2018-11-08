@@ -39,6 +39,7 @@ public class Manager implements Updatable, Disposable {
                         if (enenmy instanceof Enemy) {
                             if (((Enemy) enenmy).checkCollision((Bullet) object)) {
                                 toRemove.add(object); //remove bullet
+                                //remove(object); // <- could use this instead
                                 //decrease enemy health
                                 //put explosion, etc
                             }
