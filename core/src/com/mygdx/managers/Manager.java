@@ -14,10 +14,12 @@ public class Manager implements Updatable, Disposable {
     List<Updatable> objects = new ArrayList<>();
     GameMain game;
     Starfighter fighter;
+    Enemy enemy;
 
-    public Manager(GameMain game, Starfighter fighter){
+    public Manager(GameMain game, Starfighter fighter, Enemy enemy){
         this.game = game;
         this.fighter = fighter;
+        this.enemy = enemy;
     }
     @Override
     public void update(float delta) {

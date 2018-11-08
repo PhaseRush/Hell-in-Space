@@ -6,12 +6,16 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.hellinspace.GameMain;
 import com.mygdx.projectiles.Bullet;
+import com.mygdx.projectiles.StandardBullet;
+import com.mygdx.screens.GameScreen;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Enemy {
 
+    private GameMain game;
     protected float x, y, vx, vy;
     protected boolean isAlive;
     protected int width, height;
@@ -19,17 +23,25 @@ public abstract class Enemy {
     protected int gameWidth = Gdx.graphics.getWidth();
     protected int gameHeight = Gdx.graphics.getHeight();
 
+    private float projectileDamage;
+
     protected Texture enemyTexture;
     protected Rectangle rectangularRepresentation;
     protected Color color;
 
-    public Enemy() {
+    public Enemy(GameMain game) {
+        this.game = game;
+        enemyTexture = new Texture(Gdx.files.internal("StandardFighterMap.png"));
+
         y = Gdx.graphics.getHeight();
         x = ThreadLocalRandom.current().nextInt(gameWidth);
         vx = 0;
         vy = 3;
-        width = 10;
-        height = 10;
+        width = enemyTexture.getWidth();
+        height = enemyTexture.getHeight();
+        rectangularRepresentation = new Rectangle(x, y, width, height);
+
+        projectileDamage = 10;
 
         color = Color.GOLD;
 
@@ -46,15 +58,21 @@ public abstract class Enemy {
     }
 
 
-    public void update(){
-        move();
-        fire();
+    public void update(float delta){
+
+        //move(delta);
+        if(ThreadLocalRandom.current().nextInt(gameWidth) % 2 == 0) {
+            shoot();
+        }
+        //render(delta);
     }
 
-    public void fire(){
-
+    public void shoot(){
+        Bullet b = new StandardBullet(game, x, y, false, projectileDamage);
+        GameScreen.updateManager.add(b);
     }
-    public void move(){
+
+    public void move(float delta){
 
     }
 
@@ -67,4 +85,18 @@ public abstract class Enemy {
             return true;
         return x < 0 || x > gameWidth || y < 0;
     }
+
+//    public void generateNewEnemy() {
+//        x = new Random().nextInt(3);
+//        if (delayTimer == 0) {
+//            while (xIndexEnemy == xIndexEnemyOld) {
+//                xIndexEnemy = new Random().nextInt(3);
+//            }
+//        }
+//
+//        Enemy enemy = new Enemy(xCoordinates[xIndexEnemy]);
+//        enemies.add((Enemy) enemy);
+//        xIndexEnemyOld = xIndexEnemy;
+//        // Now that you used the new index you can store it as the Old one
+//    }
 }

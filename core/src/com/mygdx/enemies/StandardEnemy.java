@@ -1,9 +1,11 @@
 package com.mygdx.enemies;
 
+import com.mygdx.hellinspace.GameMain;
+
 public class StandardEnemy extends Enemy {
 
-    public StandardEnemy() {
-        super();
+    public StandardEnemy(GameMain game) {
+        super(game);
     }
 
     public void update(){
