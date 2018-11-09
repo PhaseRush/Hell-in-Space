@@ -8,14 +8,14 @@ public class StandardEnemy extends Enemy {
         super(game);
     }
 
-    public void update(){
-        pos.y += v.y;
-    }
+//    public void update(){
+//        pos.y += v.y;
+//    }
 
-    public void fire(){
-        //make bullets first
-        System.out.println("pew pew");
-    }
+//    public void fire(){
+//        //make bullets first
+//        //System.out.println("pew pew");
+//    }
 
     /**
      * Releases all resources of this object.

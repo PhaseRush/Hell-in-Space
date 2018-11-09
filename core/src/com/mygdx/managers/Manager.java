@@ -46,6 +46,10 @@ public class Manager implements Updatable, Disposable {
 
         for (Enemy enemy : enemies) {
             enemy.update(delta);
+            if (enemy.hasDied()) {
+                EnemiesToRemove.add(enemy);
+                numEnemies--;
+            }
         }
 
         for (Updatable object : new ArrayList<>(objects)) { //new ArrayList<>(objects)

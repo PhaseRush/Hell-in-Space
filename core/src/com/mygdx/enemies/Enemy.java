@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.hellinspace.GameMain;
 import com.mygdx.projectiles.Bullet;
 import com.mygdx.projectiles.StandardBullet;
+import com.mygdx.projectiles.StandardEnemyBullet;
 import com.mygdx.screens.GameScreen;
 import com.mygdx.util.Updatable;
 
@@ -40,7 +41,7 @@ public abstract class Enemy implements Disposable, Updatable {
         this.game = game;
 
         // Get Texture
-        enemyTexture = new Texture(Gdx.files.internal("StandardFighterMap.png"));
+        enemyTexture = new Texture(Gdx.files.internal("StandardFighterMap2.png"));
         width = enemyTexture.getWidth();
         height = enemyTexture.getHeight();
 
@@ -49,16 +50,16 @@ public abstract class Enemy implements Disposable, Updatable {
         Random r = new Random();
         pos = new Vector2();
         pos.x = r.nextInt(gameWidth - padding);
-        pos.y = r.nextInt(gameHeight - padding);
+        pos.y = r.nextInt((gameHeight - gameHeight/2) + 1) + gameHeight/2;
 
         // Set Velocity
         v = new Vector2();
         v.x = 0;
-        v.y = 3;
+        v.y = -1;
 
         // Set Enemy Statistics
         projectileDamage = 10;
-        shotFrequency = 20;
+        shotFrequency = 40;
         isAlive = true;
 
         color = Color.GOLD;
@@ -68,24 +69,24 @@ public abstract class Enemy implements Disposable, Updatable {
         clock = 0;
     }
 
-    private void generateTexture(){
-        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888); //may change format
-        pixmap.setColor(color); //green if good, red if not good
-        pixmap.fillRectangle(0,0, width, height);
-        enemyTexture = new Texture(pixmap);
-        //TextureData textureData = enemyTexture.getTextureData();
-        //textureData.prepare();
-
-        //Pixmap pixmap = enemyTexture.getTextureData().consumePixmap();
-        //enemyTexture = new Texture(pixmap);
-        pixmap.dispose();
-    }
+//    private void generateTexture(){
+//        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888); //may change format
+//        pixmap.setColor(color); //green if good, red if not good
+//        pixmap.fillRectangle(0,0, width, height);
+//        enemyTexture = new Texture(pixmap);
+//        //TextureData textureData = enemyTexture.getTextureData();
+//        //textureData.prepare();
+//
+//        //Pixmap pixmap = enemyTexture.getTextureData().consumePixmap();
+//        //enemyTexture = new Texture(pixmap);
+//        pixmap.dispose();
+//    }
 
 
     public void update(float delta){
 
         render(delta);
-        //move(delta);
+        move(delta);
         if(clock % shotFrequency == 0) {
             shoot();
         }
@@ -100,12 +101,13 @@ public abstract class Enemy implements Disposable, Updatable {
     }
 
     public void shoot(){
-        Bullet b = new StandardBullet(game, pos.x, pos.y, false, projectileDamage);
+        Bullet b = new StandardEnemyBullet(game, pos.x + width/2, pos.y, false, projectileDamage);
         GameScreen.updateManager.add(b);
     }
 
     public void move(float delta){
-
+        pos.y += v.y;
+        //pos.mulAdd(v, delta);
     }
 
     public boolean checkCollision(Bullet b) {
@@ -121,7 +123,7 @@ public abstract class Enemy implements Disposable, Updatable {
     public boolean hasDied() {
         if (!isAlive)
             return true;
-        return pos.x < 0 || pos.x > gameWidth || pos.y < 0;
+        return pos.x < -width || pos.x > gameWidth + width || pos.y < -height;
     }
 
 //    public void generateNewEnemy() {
