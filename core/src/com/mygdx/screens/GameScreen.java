@@ -8,7 +8,6 @@ import com.mygdx.managers.Manager;
 import com.mygdx.starfield.Starfield;
 import com.mygdx.starfighter.StandardFighter;
 import com.mygdx.starfighter.Starfighter;
-import com.mygdx.enemies.StandardEnemy;
 import com.mygdx.enemies.Enemy;
 
 public class GameScreen implements Screen {
@@ -38,9 +37,6 @@ public class GameScreen implements Screen {
         //stuff that probably shouldn't be here but is anyways
         fighter = new StandardFighter(game);
 
-        // more stuff that shouldn't be here, but is anyways.
-        enemy = new StandardEnemy(game);
-
         //init update manager
         updateManager = new Manager(game, fighter, enemy);
     }
@@ -60,7 +56,6 @@ public class GameScreen implements Screen {
 
         starfield.show(delta);
         fighter.update(delta);
-        enemy.update(delta);
         game.batch.draw(fighter.getFighterSprite(), fighter.getPos().x, fighter.getPos().y);
 
         //updatable manager
