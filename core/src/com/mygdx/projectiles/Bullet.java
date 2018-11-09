@@ -24,8 +24,6 @@ public abstract class Bullet implements Disposable, Updatable {
     protected Texture bulletTexture;
     protected Color color;
 
-    protected Circle circularRepresentation;
-
     public Bullet(GameMain game, float x, float y, float vx, float vy, boolean isGood, float bearing, float damageValue){
         this.game = game;
         width = 10;
@@ -51,7 +49,8 @@ public abstract class Bullet implements Disposable, Updatable {
         }
 
         generateTexture();
-        circularRepresentation = new Circle(pos.x, pos.y, width);
+        // I removed circular representation because the circle's x,y values changed over time, so
+        // the representation is created when it's needed.
     }
 
     public void update(float delta){
@@ -85,7 +84,7 @@ public abstract class Bullet implements Disposable, Updatable {
     }
 
     public Circle getBulletAsCircle() {
-        return circularRepresentation;
+        return new Circle(pos.x, pos.y, width);
     }
 
     public boolean isGood() {
