@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Manager implements Updatable, Disposable {
     List<Updatable> objects = new ArrayList<>();
-    List<Enemy> enemies = new ArrayList<Enemy>();
+    List<Enemy> enemies = new ArrayList<>();
     GameMain game;
     Starfighter fighter;
     Enemy enemy;
@@ -33,7 +33,7 @@ public class Manager implements Updatable, Disposable {
     @Override
     public void update(float delta) {
         List<Updatable> toRemove = new ArrayList<>(); //list of objects to remove
-        List<Enemy> EnemiesToRemove = new ArrayList<Enemy>(); //list of enemies to remove
+        List<Enemy> EnemiesToRemove = new ArrayList<>(); //list of enemies to remove
 
         clock++;
 
