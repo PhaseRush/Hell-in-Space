@@ -24,7 +24,6 @@ public abstract class Starfighter implements Disposable, Updatable {
     private int health; //might add shield mechanic
 
     Texture fighterSprite;
-    Rectangle rectangularRepresentation;
 
     Vector2 pos = new Vector2();
     Vector2 v = new Vector2();
@@ -45,7 +44,6 @@ public abstract class Starfighter implements Disposable, Updatable {
         fighterSprite = new Texture(Gdx.files.internal("StandardFighter.png"));
         width = fighterSprite.getWidth();
         height = fighterSprite.getHeight();
-        rectangularRepresentation = new Rectangle(pos.x, pos.y, width, height);
 
         pos.x = gameWidth/2 - width/2;
         pos.y = gameHeight/2 - height/2;
@@ -145,7 +143,7 @@ public abstract class Starfighter implements Disposable, Updatable {
     }
 
     public boolean checkCollision(Bullet b) {
-        return Intersector.overlaps(b.getBulletAsCircle(), rectangularRepresentation);
+        return Intersector.overlaps(b.getBulletAsCircle(), new Rectangle(pos.x, pos.y, width, height));
         //return rectangularRepresentation.overlaps(b.getBulletAsCircle()); //bullet not circle anymore.
     }
 

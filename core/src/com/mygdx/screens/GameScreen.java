@@ -8,6 +8,7 @@ import com.mygdx.managers.Manager;
 import com.mygdx.starfield.Starfield;
 import com.mygdx.starfighter.StandardFighter;
 import com.mygdx.starfighter.Starfighter;
+import com.mygdx.enemies.Enemy;
 
 public class GameScreen implements Screen {
     final GameMain game;
@@ -21,6 +22,7 @@ public class GameScreen implements Screen {
     int gameHeight = Gdx.graphics.getHeight();
 
     Starfighter fighter;
+    Enemy enemy;
     public static Manager updateManager;
 
     public GameScreen(final GameMain game) {
@@ -36,7 +38,7 @@ public class GameScreen implements Screen {
         fighter = new StandardFighter(game);
 
         //init update manager
-        updateManager = new Manager(game, fighter);
+        updateManager = new Manager(game, fighter, enemy);
     }
 
     @Override
