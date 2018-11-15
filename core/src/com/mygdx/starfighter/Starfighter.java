@@ -21,7 +21,7 @@ public abstract class Starfighter implements Disposable, Updatable {
     //other
     private float projectileDamage;
 
-    private int health; //might add shield mechanic
+    private int health, energy; //might add shield mechanic
 
     Texture fighterSprite;
 
@@ -53,6 +53,7 @@ public abstract class Starfighter implements Disposable, Updatable {
         bearing = 0;
 
         health = 100;
+        energy = 60;
         projectileDamage = 10;
 
         //movement
@@ -147,9 +148,6 @@ public abstract class Starfighter implements Disposable, Updatable {
         //return rectangularRepresentation.overlaps(b.getBulletAsCircle()); //bullet not circle anymore.
     }
 
-    public void decreaseHealth() {
-        health--; //or whatever
-    }
     public void decreaseHealth(float f) {
         health -= f;
     }
@@ -164,6 +162,10 @@ public abstract class Starfighter implements Disposable, Updatable {
 
     public int getHealth() {
         return health;
+    }
+
+    public int getEnergy() {
+        return energy;
     }
 
     public void dispose(){

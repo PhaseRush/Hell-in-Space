@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.hellinspace.GameMain;
 import com.mygdx.managers.Manager;
 import com.mygdx.starfield.Starfield;
+import com.mygdx.starfighter.PlayerHUD;
 import com.mygdx.starfighter.StandardFighter;
 import com.mygdx.starfighter.Starfighter;
 import com.mygdx.enemies.Enemy;
@@ -22,7 +23,7 @@ public class GameScreen implements Screen {
     int gameHeight = Gdx.graphics.getHeight();
 
     Starfighter fighter;
-    Enemy enemy;
+    PlayerHUD hud;
     public static Manager updateManager;
 
     public GameScreen(final GameMain game) {
@@ -36,9 +37,10 @@ public class GameScreen implements Screen {
 
         //stuff that probably shouldn't be here but is anyways
         fighter = new StandardFighter(game);
+        hud = new PlayerHUD(game, fighter);
 
         //init update manager
-        updateManager = new Manager(game, fighter, enemy);
+        updateManager = new Manager(game, fighter, hud);
     }
 
     @Override
@@ -57,6 +59,7 @@ public class GameScreen implements Screen {
         starfield.show(delta);
         fighter.update(delta);
         game.batch.draw(fighter.getFighterSprite(), fighter.getPos().x, fighter.getPos().y);
+        hud.show(delta);
 
         //updatable manager
         updateManager.update(delta);
