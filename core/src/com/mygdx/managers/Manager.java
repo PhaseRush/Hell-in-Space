@@ -25,7 +25,7 @@ public class Manager implements Updatable, Disposable {
 
     Texture endGame;
 
-    public Manager(GameMain game, Starfighter fighter, PlayerHUD hud){
+    public Manager(GameMain game, Starfighter fighter, PlayerHUD hud) {
         this.game = game;
         this.fighter = fighter;
         this.hud = hud;
@@ -36,6 +36,7 @@ public class Manager implements Updatable, Disposable {
         enemyFrequency = 60;
         maxEnemies = 4;
         numEnemies = 0;
+
         score = 0;
     }
 
@@ -74,7 +75,7 @@ public class Manager implements Updatable, Disposable {
 
         enemies.removeAll(EnemiesToRemove);
 
-        for (Updatable object : new ArrayList<>(objects)) { //new ArrayList<>(objects)
+        for (Updatable object : new ArrayList<>(objects)) {
             object.update(delta);
             //bullets
             if (object instanceof Bullet) {
@@ -97,7 +98,6 @@ public class Manager implements Updatable, Disposable {
                             //decrease enemy health
                             //put explosion, etc
                             EnemiesToRemove.add(enemy);
-                            // need a way to check if it's the same enemy
                             numEnemies--;
                         }
                     }

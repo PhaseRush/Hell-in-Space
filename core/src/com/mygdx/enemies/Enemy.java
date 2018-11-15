@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.hellinspace.GameMain;
-import com.mygdx.managers.Manager;
 import com.mygdx.projectiles.Bullet;
 import com.mygdx.projectiles.StandardEnemyBullet;
 import com.mygdx.screens.GameScreen;
@@ -58,7 +57,7 @@ public abstract class Enemy implements Disposable, Updatable {
 
         // Set Velocity
         v = new Vector2();
-        v.x = 1;
+        v.x = 0;
         v.y = -1;
 
         // Set Enemy Information
