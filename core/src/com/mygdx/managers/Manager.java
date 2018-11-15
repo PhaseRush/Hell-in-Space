@@ -17,8 +17,7 @@ import java.util.Set;
 
 public class Manager implements Updatable, Disposable {
     List<Updatable> objects = new ArrayList<>();
-    List<Enemy> enemies = new ArrayList<>();
-    //static List<> coordinates = new ArrayList<>();
+    Set<Enemy> enemies = new HashSet<>();
     GameMain game;
     Starfighter fighter;
     int clock,enemyFrequency,maxEnemies,numEnemies,score;

@@ -28,7 +28,7 @@ public abstract class Enemy implements Disposable, Updatable {
     protected int width, height;
 
     protected int shotFrequency;
-    private float projectileDamage;
+    protected float projectileDamage;
 
     protected Texture enemyTexture;
     protected Color color;
@@ -58,7 +58,7 @@ public abstract class Enemy implements Disposable, Updatable {
 
         // Set Velocity
         v = new Vector2();
-        v.x = 0;
+        v.x = 1;
         v.y = -1;
 
         // Set Enemy Information
