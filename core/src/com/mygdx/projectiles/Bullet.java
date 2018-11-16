@@ -22,6 +22,7 @@ public abstract class Bullet implements Disposable, Updatable {
     protected int gameHeight = Gdx.graphics.getHeight();
 
     protected Texture bulletTexture;
+    protected Circle circleRepresentation;
     protected Color color;
 
     public Bullet(GameMain game, float x, float y, float vx, float vy, boolean isGood, float bearing, float damageValue){
@@ -49,11 +50,44 @@ public abstract class Bullet implements Disposable, Updatable {
         }
 
         generateTexture();
+        circleRepresentation = new Circle(pos.x, pos.y, width);
         // I removed circular representation because the circle's x,y values changed over time, so
         // the representation is created when it's needed.
     }
 
-    public void update(float delta){
+    public Bullet(GameMain game, float x, float y, float vx, float vy, boolean isGood, float bearing, float damageValue, Color color){
+        this.game = game;
+        width = 10;
+
+        pos = new Vector2();
+        pos.x = x;
+        pos.y = y;
+
+        v = new Vector2();
+        v.x = vx;
+        v.y = vy;
+
+        this.bearing = bearing;
+        this.damageValue = damageValue;
+        this.isGood = isGood;
+        isAlive = true;
+
+
+        if(isGood) {
+            color = Color.GREEN;
+        }else {
+            color = Color.RED;
+        }
+
+        generateTexture();
+        circleRepresentation = new Circle(pos.x, pos.y, width);
+
+        //set color
+        this.color = color;
+    }
+
+
+        public void update(float delta){
         move(delta);
         render(delta);
     }
@@ -83,8 +117,10 @@ public abstract class Bullet implements Disposable, Updatable {
         return bulletTexture;
     }
 
+    //changed to not create a new object every time.
     public Circle getBulletAsCircle() {
-        return new Circle(pos.x, pos.y, width);
+        circleRepresentation.setPosition(pos.x, pos.y);
+        return circleRepresentation;
     }
 
     public boolean isGood() {
