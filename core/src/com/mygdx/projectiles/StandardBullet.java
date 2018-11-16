@@ -10,7 +10,7 @@ public class StandardBullet extends Bullet {
     }
 
     public StandardBullet(GameMain game, float x, float y, boolean isGood, float damageValue) {
-        super(game, x, y, 50, 50, isGood, (float) Math.PI / 2, damageValue);
+        super(game, x, y, 0, 50, isGood, (float) Math.PI / 2, damageValue);
         vx = 50;
         vy = 50;
         bearing = (float) Math.PI / 2;
