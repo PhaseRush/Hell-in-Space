@@ -20,6 +20,8 @@ public abstract class Starfighter implements Disposable, Updatable {
 
     //rotation state
     int rotationState; //0 up, 1 right, 2 down, 3 left
+    long lastRotationTime;
+    long minTimeBetweenRotations;
     private float bearing;
 
     //other
@@ -77,6 +79,9 @@ public abstract class Starfighter implements Disposable, Updatable {
         maxRotAccel = 10;
         linearFriction = .5f;
         angularFriction = 1;
+
+        //misc
+        minTimeBetweenRotations = 1000; //have to wait minimum 1 sec between rotations
     }
 
     public void update(float delta){
@@ -89,19 +94,31 @@ public abstract class Starfighter implements Disposable, Updatable {
 
     //todo might want to mess around with pos.x and pos.y -- Currently not centered or smth?
     private void shoot() { //just add to the updateManager
-        Bullet b = new StandardBullet(game, pos.x, pos.y, true, projectileDamage);
-        GameScreen.updateManager.add(b);
+        Bullet bullet;
+        if (rotationState == 0) {
+            bullet = new StandardBullet(game, pos.x + width/2, pos.y + height - 10, true, projectileDamage);
+        } else if (rotationState == 1) {
+            bullet = new StandardBullet(game, pos.x + width, pos.y + height/2, true, projectileDamage);
+        } else if (rotationState == 2) {
+            bullet = new StandardBullet(game, pos.x + width/2, pos.y +10, true, projectileDamage);
+        } else { //rotationState == 3 -- also a catch block for invalid states
+            bullet = new StandardBullet(game, pos.x, pos.y + height/2, true, projectileDamage);
+        }
+
+        GameScreen.updateManager.add(bullet);
     }
 
     //based on this http://steigert.blogspot.com/2012/05/11-libgdx-tutorial-vectors.html
     private void move(float delta){
         if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-            rotateShip(-1);
-            bearing += maxRotAccel * delta;
+            if (System.currentTimeMillis() - lastRotationTime > minTimeBetweenRotations)
+                rotateShip(-1);
+            //bearing += maxRotAccel * delta;
             //System.out.println("Q: bearing: " + bearing);
         } else if (Gdx.input.isKeyPressed(Input.Keys.E)) {
-            rotateShip(1);
-            bearing -= maxRotAccel * delta;
+            if (System.currentTimeMillis() - lastRotationTime > minTimeBetweenRotations)
+                rotateShip(1);
+            //bearing -= maxRotAccel * delta;
             //System.out.println("E: bearing: " + bearing);
         }
 
@@ -163,6 +180,9 @@ public abstract class Starfighter implements Disposable, Updatable {
      * @param i +1 = rotate clockwise, -1 = counter cw
      */
     private void rotateShip(int i) {
+        //update last rotation time
+        lastRotationTime = System.currentTimeMillis();
+
         if (i == 1) {
             if (rotationState == 3) rotationState = 0;
             else rotationState++;
@@ -175,15 +195,27 @@ public abstract class Starfighter implements Disposable, Updatable {
         switch (rotationState) {
             case 0:
                 fighter = upStarfighter;
+                width = upStarfighter.getWidth();
+                height = upStarfighter.getHeight();
                 break;
             case 1:
                 fighter = rightStarfighter;
+                width = rightStarfighter.getWidth();
+                height = rightStarfighter.getHeight();
                 break;
             case 2:
                 fighter = downStarfighter;
+                width = downStarfighter.getWidth();
+                height = downStarfighter.getHeight();
                 break;
             case 3:
                 fighter = leftStarfighter;
+                width = leftStarfighter.getWidth();
+                height = leftStarfighter.getHeight();
+                break;
+            default: //in caes
+                fighter = upStarfighter;
+                System.out.println("Invalid Rotation, defaulting to UpStarfighter");
         }
     }
 
