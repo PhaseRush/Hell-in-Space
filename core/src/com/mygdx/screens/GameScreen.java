@@ -59,7 +59,7 @@ public class GameScreen implements Screen {
 
         starfield.show(delta);
         fighter.update(delta);
-        game.batch.draw(fighter.getFighterSprite(), fighter.getPos().x, fighter.getPos().y);
+        game.batch.draw(fighter.getFighterTexture(), fighter.getPos().x, fighter.getPos().y);
         hud.show(delta);
 
         //updatable manager
