@@ -9,7 +9,6 @@ import com.mygdx.starfield.Starfield;
 import com.mygdx.starfighter.PlayerHUD;
 import com.mygdx.starfighter.StandardFighter;
 import com.mygdx.starfighter.Starfighter;
-import com.mygdx.enemies.Enemy;
 
 public class GameScreen implements Screen {
     final GameMain game;
@@ -24,7 +23,6 @@ public class GameScreen implements Screen {
 
     Starfighter fighter;
     PlayerHUD hud;
-    Enemy enemy;
 
     public static Manager updateManager;
 
