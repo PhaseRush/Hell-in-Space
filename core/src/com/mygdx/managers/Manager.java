@@ -3,6 +3,7 @@ package com.mygdx.managers;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.enemies.Enemy;
+import com.mygdx.enemies.SideEnemy;
 import com.mygdx.enemies.StandardEnemy;
 import com.mygdx.hellinspace.GameMain;
 import com.mygdx.projectiles.Bullet;
@@ -20,7 +21,7 @@ public class Manager implements Updatable, Disposable {
     Set<Enemy> enemies = new HashSet<>();
     GameMain game;
     Starfighter fighter;
-    int clock,enemyFrequency,maxEnemies,numEnemies,score;
+    private int clock,enemyFrequency,sideEnemyFrequency,maxEnemies,numEnemies,score, maxSideEnemies, numSideEnemies;
     PlayerHUD hud;
 
     Texture endGame;
@@ -34,8 +35,12 @@ public class Manager implements Updatable, Disposable {
 
         clock = 0;
         enemyFrequency = 60;
+        sideEnemyFrequency = 500;
         maxEnemies = 4;
         numEnemies = 0;
+        // How many side enemy pairs are allowed at once
+        maxSideEnemies = 2;
+        numSideEnemies = 0;
 
         score = 0;
     }
@@ -52,11 +57,10 @@ public class Manager implements Updatable, Disposable {
 //            return;
 //        }
 
-        if (clock % enemyFrequency == 0 && numEnemies <= maxEnemies) {
-            numEnemies++;
-            Enemy enemy = new StandardEnemy(game);
-            enemies.add(enemy);
-            game.batch.draw(enemy.getEnemyTexture(), enemy.getPos().x, enemy.getPos().y);
+        if (clock % sideEnemyFrequency == 0 / 2 && numSideEnemies <= maxSideEnemies) {
+            addSideEnemy();
+        } else if (clock % enemyFrequency == 0 && numEnemies < maxEnemies) {
+            addStandardEnemy();
         }
 
         for (Enemy enemy : enemies) {
@@ -99,6 +103,9 @@ public class Manager implements Updatable, Disposable {
                             //put explosion, etc
                             EnemiesToRemove.add(enemy);
                             numEnemies--;
+                            if (enemy instanceof SideEnemy) {
+                                numSideEnemies--;
+                            }
                         }
                     }
                 }
@@ -119,7 +126,30 @@ public class Manager implements Updatable, Disposable {
         objects.remove(up);
     }
 
-    public void dispose() {
+    public void dispose() { }
+
+    public void addSideEnemy() {
+        numEnemies += 2;
+        numSideEnemies += 2;
+
+        Enemy leftEnemy = new SideEnemy(game, true);
+        Enemy rightEnemy = new SideEnemy(game, false);
+
+        enemies.add(leftEnemy);
+        enemies.add(rightEnemy);
+
+        game.batch.draw(leftEnemy.getEnemyTexture(), leftEnemy.getPos().x, leftEnemy.getPos().y);
+        game.batch.draw(rightEnemy.getEnemyTexture(), rightEnemy.getPos().x, rightEnemy.getPos().y);
+    }
+
+    public void addStandardEnemy() {
+        numEnemies++;
+
+        Enemy enemy = new StandardEnemy(game);
+
+        enemies.add(enemy);
+
+        game.batch.draw(enemy.getEnemyTexture(), enemy.getPos().x, enemy.getPos().y);
     }
 
 }

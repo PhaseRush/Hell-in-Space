@@ -24,8 +24,8 @@ public class PlayerHUD implements Disposable {
         this.game = game;
         this.fighter = fighter;
 
-        healthBar = new Texture("Health.png");
-        energyBar = new Texture("Energy.png");
+        healthBar = new Texture("HUD/Health.png");
+        energyBar = new Texture("HUD/Energy.png");
     }
 
     public void show(float delta) {

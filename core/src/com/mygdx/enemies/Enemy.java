@@ -17,7 +17,7 @@ import java.util.Random;
 
 public abstract class Enemy implements Disposable, Updatable {
 
-    private GameMain game;
+    protected GameMain game;
 
     // position and velocity
     protected Vector2 pos, v;
@@ -30,6 +30,7 @@ public abstract class Enemy implements Disposable, Updatable {
     protected float projectileDamage;
 
     protected Texture enemyTexture;
+    protected Rectangle rectangleRepresentation;
     protected Color color;
 
     // game information
@@ -44,7 +45,7 @@ public abstract class Enemy implements Disposable, Updatable {
         this.game = game;
 
         // Get Texture
-        enemyTexture = new Texture(Gdx.files.internal("StandardFighterMap2.png"));
+        enemyTexture = new Texture(Gdx.files.internal("Enemies/DownEnemy.png"));
         width = enemyTexture.getWidth();
         height = enemyTexture.getHeight();
 
@@ -66,6 +67,7 @@ public abstract class Enemy implements Disposable, Updatable {
         isAlive = true;
 
         color = Color.GOLD;
+        rectangleRepresentation = new Rectangle(pos.x, pos.y, width, height);
 
         clock = 0;
     }
@@ -112,7 +114,8 @@ public abstract class Enemy implements Disposable, Updatable {
     }
 
     public Rectangle getEnemyAsRectangle() {
-        return new Rectangle(pos.x, pos.y, width, height);
+        rectangleRepresentation.setPosition(pos.x, pos.y);
+        return rectangleRepresentation;
     }
 
     @Override

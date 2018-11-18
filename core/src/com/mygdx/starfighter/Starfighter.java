@@ -31,6 +31,8 @@ public abstract class Starfighter implements Disposable, Updatable {
 
     Texture fighter, upStarfighter, rightStarfighter, leftStarfighter, downStarfighter;
 
+    private Rectangle rectangleRepresentation;
+
     private Vector2 pos = new Vector2();
     private Vector2 v = new Vector2();
     private Vector2 a = new Vector2();
@@ -48,10 +50,10 @@ public abstract class Starfighter implements Disposable, Updatable {
         this.game = game;
 
         //sprite stuff
-        upStarfighter = new Texture(Gdx.files.internal("Starfighter\\UpStarfighter.png"));
-        rightStarfighter = new Texture(Gdx.files.internal("Starfighter\\RightStarfighter.png"));
-        leftStarfighter = new Texture(Gdx.files.internal("Starfighter\\LeftStarfighter.png"));
-        downStarfighter = new Texture(Gdx.files.internal("Starfighter\\DownStarfighter.png"));
+        upStarfighter = new Texture(Gdx.files.internal("Starfighter/UpStarfighter.png"));
+        rightStarfighter = new Texture(Gdx.files.internal("Starfighter/RightStarfighter.png"));
+        leftStarfighter = new Texture(Gdx.files.internal("Starfighter/LeftStarfighter.png"));
+        downStarfighter = new Texture(Gdx.files.internal("Starfighter/DownStarfighter.png"));
         fighter = upStarfighter; //init the regular fighter so not null on first render
 
         width = upStarfighter.getWidth();
@@ -82,6 +84,8 @@ public abstract class Starfighter implements Disposable, Updatable {
 
         //misc
         minTimeBetweenRotations = 1000; //have to wait minimum 1 sec between rotations
+
+        rectangleRepresentation = new Rectangle(pos.x, pos.y, width, height);
     }
 
     public void update(float delta){
@@ -220,7 +224,8 @@ public abstract class Starfighter implements Disposable, Updatable {
     }
 
     public boolean checkCollision(Bullet b) {
-        return Intersector.overlaps(b.getBulletAsCircle(), new Rectangle(pos.x, pos.y, width, height));
+        rectangleRepresentation.setPosition(pos.x, pos.y);
+        return Intersector.overlaps(b.getBulletAsCircle(), rectangleRepresentation);
         //return rectangularRepresentation.overlaps(b.getBulletAsCircle()); //bullet not circle anymore.
     }
 
