@@ -149,7 +149,7 @@ public abstract class Starfighter implements Disposable, Updatable {
         v.add(a);
 
         //check if velocity is within bound
-        //todo, maybe flash screen red if hit max v
+        //todo, maybe flash screen red if hit max initalV
         if (v.x < 0)
             v.x = Math.max(v.x, -maxXSpeed);
         else if (v.x > 0)
@@ -177,6 +177,9 @@ public abstract class Starfighter implements Disposable, Updatable {
             v.y = 0;
         }
 
+        //set the positions of the rectangle representation
+        rectangleRepresentation.set(pos.x, pos.y, width, height);
+
     }
 
     /**
@@ -199,34 +202,28 @@ public abstract class Starfighter implements Disposable, Updatable {
         switch (rotationState) {
             case 0:
                 fighter = upStarfighter;
-                width = upStarfighter.getWidth();
-                height = upStarfighter.getHeight();
                 break;
             case 1:
                 fighter = rightStarfighter;
-                width = rightStarfighter.getWidth();
-                height = rightStarfighter.getHeight();
                 break;
             case 2:
                 fighter = downStarfighter;
-                width = downStarfighter.getWidth();
-                height = downStarfighter.getHeight();
                 break;
             case 3:
                 fighter = leftStarfighter;
-                width = leftStarfighter.getWidth();
-                height = leftStarfighter.getHeight();
                 break;
             default: //in caes
                 fighter = upStarfighter;
                 System.out.println("Invalid Rotation, defaulting to UpStarfighter");
         }
+
+        width = upStarfighter.getWidth();
+        height = upStarfighter.getHeight();
     }
 
     public boolean checkCollision(Bullet b) {
-        rectangleRepresentation.setPosition(pos.x, pos.y);
+        //rectangleRepresentation.set(pos.x, pos.y, width, height);
         return Intersector.overlaps(b.getBulletAsCircle(), rectangleRepresentation);
-        //return rectangularRepresentation.overlaps(b.getBulletAsCircle()); //bullet not circle anymore.
     }
 
     public void decreaseHealth(float f) {
@@ -239,6 +236,10 @@ public abstract class Starfighter implements Disposable, Updatable {
 
     public Vector2 getPos() {
         return pos;
+    }
+
+    public Vector2 getVel() {
+        return v;
     }
 
     public int getHealth() {

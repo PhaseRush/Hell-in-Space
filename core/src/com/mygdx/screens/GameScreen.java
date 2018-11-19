@@ -21,7 +21,7 @@ public class GameScreen implements Screen {
     int gameWidth = Gdx.graphics.getWidth();
     int gameHeight = Gdx.graphics.getHeight();
 
-    Starfighter fighter;
+    public static Starfighter fighter;
     PlayerHUD hud;
 
     public static Manager updateManager;

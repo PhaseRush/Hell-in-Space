@@ -13,7 +13,7 @@ import com.mygdx.util.Updatable;
 public abstract class Bullet implements Disposable, Updatable {
     private GameMain game;
     protected float bearing, damageValue;
-    protected Vector2 pos, v;
+    protected Vector2 pos, initalV, maxV;
 
     protected boolean isAlive, isGood;
     protected int width; //got rid of height since it is circle
@@ -25,7 +25,7 @@ public abstract class Bullet implements Disposable, Updatable {
     protected Circle circleRepresentation;
     protected Color color;
 
-    public Bullet(GameMain game, float x, float y, float vx, float vy, boolean isGood, float bearing, float damageValue){
+    public Bullet(GameMain game, float x, float y, float vx, float vy, float maxVx, float maxVy, boolean isGood, float bearing, float damageValue){
         this.game = game;
         width = 10;
 
@@ -33,9 +33,11 @@ public abstract class Bullet implements Disposable, Updatable {
         pos.x = x;
         pos.y = y;
 
-        v = new Vector2();
-        v.x = vx;
-        v.y = vy;
+        initalV = new Vector2();
+        initalV.x = vx;
+        initalV.y = vy;
+
+        this.maxV = new Vector2(maxVx, maxVy); //max v
 
         this.bearing = bearing;
         this.damageValue = damageValue;
@@ -63,9 +65,9 @@ public abstract class Bullet implements Disposable, Updatable {
         pos.x = x;
         pos.y = y;
 
-        v = new Vector2();
-        v.x = vx;
-        v.y = vy;
+        initalV = new Vector2();
+        initalV.x = vx;
+        initalV.y = vy;
 
         this.bearing = bearing;
         this.damageValue = damageValue;
@@ -97,7 +99,7 @@ public abstract class Bullet implements Disposable, Updatable {
     }
 
     public void move(float delta) {
-        pos.mulAdd(v, delta);
+        pos.mulAdd(initalV, delta);
     }
 
     private void generateTexture(){
