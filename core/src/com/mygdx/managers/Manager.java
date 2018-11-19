@@ -48,7 +48,7 @@ public class Manager implements Updatable, Disposable {
     @Override
     public void update(float delta) {
         List<Updatable> toRemove = new ArrayList<>(); //list of objects to remove
-        Set<Enemy> EnemiesToRemove = new HashSet<>(); //list of enemies to remove
+        Set<Enemy> enemiesToRemove = new HashSet<>(); //list of enemies to remove
 
         clock++;
 
@@ -59,25 +59,26 @@ public class Manager implements Updatable, Disposable {
 
         if (clock % sideEnemyFrequency == 0 / 2 && numSideEnemies <= maxSideEnemies) {
             addSideEnemy();
-        } else if (clock % enemyFrequency == 0 && numEnemies < maxEnemies) {
+        } else if (clock % enemyFrequency == 0 && numEnemies < maxEnemies) {//(clock % enemyFrequency == 0 && numEnemies < maxEnemies)
             addStandardEnemy();
+            System.out.println(numEnemies);
         }
 
         for (Enemy enemy : enemies) {
             enemy.update(delta);
             if (enemy.hasDied()) {
-                EnemiesToRemove.add(enemy);
+                enemiesToRemove.add(enemy);
 
                 // went off screen
                 if (score > 0) {
                     score--;
                 }
-
+// side enemies
                 numEnemies--;
             }
         }
 
-        enemies.removeAll(EnemiesToRemove);
+        enemies.removeAll(enemiesToRemove);
 
         for (Updatable object : new ArrayList<>(objects)) {
             object.update(delta);
@@ -101,8 +102,8 @@ public class Manager implements Updatable, Disposable {
                             //remove(object); // <- could use this instead
                             //decrease enemy health
                             //put explosion, etc
-                            EnemiesToRemove.add(enemy);
-                            numEnemies--;
+                            enemiesToRemove.add(enemy);
+                            //numEnemies--;
                             if (enemy instanceof SideEnemy) {
                                 numSideEnemies--;
                             }
@@ -112,11 +113,12 @@ public class Manager implements Updatable, Disposable {
             }
         }
 
-        score += EnemiesToRemove.size();
+        score += enemiesToRemove.size();
         hud.updateScore(score);
 
         objects.removeAll(toRemove);
-        enemies.removeAll(EnemiesToRemove);
+        numEnemies -= enemiesToRemove.size();
+        enemies.removeAll(enemiesToRemove);
     }
 
     public void add (Updatable up) {
