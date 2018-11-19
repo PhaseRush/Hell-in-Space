@@ -238,6 +238,10 @@ public abstract class Starfighter implements Disposable, Updatable {
         return pos;
     }
 
+    public Vector2 getVel() {
+        return v;
+    }
+
     public int getHealth() {
         return health;
     }
