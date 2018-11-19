@@ -9,7 +9,7 @@ public class StandardEnemy extends Enemy {
     }
 
 //    public void update(){
-//        pos.y += v.y;
+//        pos.y += initalV.y;
 //    }
 
 //    public void fire(){

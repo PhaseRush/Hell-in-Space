@@ -92,7 +92,7 @@ public abstract class Enemy implements Disposable, Updatable {
 
     public void move(float delta){
         pos.y += v.y;
-        //pos.mulAdd(v, delta);
+        //pos.mulAdd(initalV, delta);
     }
 
     public boolean checkCollision(Bullet b) {

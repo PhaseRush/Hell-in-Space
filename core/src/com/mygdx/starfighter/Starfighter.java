@@ -149,7 +149,7 @@ public abstract class Starfighter implements Disposable, Updatable {
         v.add(a);
 
         //check if velocity is within bound
-        //todo, maybe flash screen red if hit max v
+        //todo, maybe flash screen red if hit max initalV
         if (v.x < 0)
             v.x = Math.max(v.x, -maxXSpeed);
         else if (v.x > 0)
