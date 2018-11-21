@@ -88,8 +88,8 @@ public abstract class Enemy implements Disposable, Updatable {
     public void shoot(){
         Bullet b = new StandardEnemyBullet(game, pos.x + width/2, pos.y, v, false, projectileDamage);
 
-        //this is for testing
-        //        Bullet b = new HomingBullet(game, pos.x + width/2, pos.y, 10, 10, 50, 50,false, 0, projectileDamage,
+//        this is for testing
+//        Bullet b = new HomingBullet(game, pos.x + width/2, pos.y, 10, 10, 50, 50,false, 0, projectileDamage,
 //                GameScreen.fighter.getPos(),
 //                GameScreen.fighter.getVel());
         GameScreen.updateManager.add(b);
