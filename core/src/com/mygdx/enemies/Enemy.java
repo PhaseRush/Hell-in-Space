@@ -86,7 +86,7 @@ public abstract class Enemy implements Disposable, Updatable {
     }
 
     public void shoot(){
-        Bullet b = new StandardEnemyBullet(game, pos.x + width/2, pos.y, false, projectileDamage);
+        Bullet b = new StandardEnemyBullet(game, pos.x + width/2, pos.y, v, false, projectileDamage);
         GameScreen.updateManager.add(b);
     }
 

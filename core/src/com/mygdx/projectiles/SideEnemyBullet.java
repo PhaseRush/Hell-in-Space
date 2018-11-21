@@ -5,6 +5,6 @@ import com.mygdx.hellinspace.GameMain;
 public class SideEnemyBullet extends Bullet {
 
     public SideEnemyBullet(GameMain game, float x, float y, boolean isGood, float damageValue, float vx, float vy) {
-        super(game, x, y, vx, vy, 50, 50, isGood, (float) Math.PI / 2, damageValue);
+        super(game, x, y, vx, vy, 50, 0, isGood, (float) Math.PI / 2, damageValue);
     }
 }

@@ -13,7 +13,7 @@ import com.mygdx.util.Updatable;
 public abstract class Bullet implements Disposable, Updatable {
     private GameMain game;
     protected float bearing, damageValue;
-    protected Vector2 pos, initalV, maxV;
+    protected Vector2 pos, initalV, maxV, actualV;
 
     protected boolean isAlive, isGood;
     protected int width; //got rid of height since it is circle
@@ -37,7 +37,8 @@ public abstract class Bullet implements Disposable, Updatable {
         initalV.x = vx;
         initalV.y = vy;
 
-        this.maxV = new Vector2(maxVx, maxVy); //max v
+        this.maxV = new Vector2(maxVx, maxVy); //max velocity
+        actualV = new Vector2(initalV.x + maxV.x, initalV.y + maxV.y);
 
         this.bearing = bearing;
         this.damageValue = damageValue;
@@ -56,6 +57,8 @@ public abstract class Bullet implements Disposable, Updatable {
         // I removed circular representation because the circle's x,y values changed over time, so
         // the representation is created when it's needed.
     }
+
+
 
     public Bullet(GameMain game, float x, float y, float vx, float vy, boolean isGood, float bearing, float damageValue, Color color){
         this.game = game;
@@ -99,7 +102,9 @@ public abstract class Bullet implements Disposable, Updatable {
     }
 
     public void move(float delta) {
-        pos.mulAdd(initalV, delta);
+        //initalV.mulAdd(maxV, delta); //added
+        //initalV.y += maxV.y;
+        pos.mulAdd(actualV, delta);
     }
 
     private void generateTexture(){
