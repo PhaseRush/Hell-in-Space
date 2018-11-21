@@ -3,6 +3,7 @@ package com.mygdx.managers;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.enemies.Enemy;
+import com.mygdx.enemies.HomingEnemy;
 import com.mygdx.enemies.SideEnemy;
 import com.mygdx.enemies.StandardEnemy;
 import com.mygdx.hellinspace.GameMain;
@@ -153,7 +154,13 @@ public class Manager implements Updatable, Disposable {
     }
 
     private void addHomingEnemy() {
+        numEnemies++;
 
+        Enemy enemy = new HomingEnemy(game);
+
+        enemies.add(enemy);
+
+        enemy.render();
     }
 
     public void addStandardEnemy() {

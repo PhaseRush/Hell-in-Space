@@ -11,12 +11,12 @@ import com.mygdx.hellinspace.GameMain;
 import com.mygdx.util.Updatable;
 
 public abstract class Bullet implements Disposable, Updatable {
-    private GameMain game;
+    protected GameMain game;
     protected float bearing, damageValue;
     protected Vector2 pos, initalV, maxV, actualV;
 
     protected boolean isAlive, isGood;
-    protected int width; //got rid of height since it is circle
+    protected int width, height; //got rid of height since it is circle
 
     protected int gameWidth = Gdx.graphics.getWidth();
     protected int gameHeight = Gdx.graphics.getHeight();
@@ -27,7 +27,6 @@ public abstract class Bullet implements Disposable, Updatable {
 
     public Bullet(GameMain game, float x, float y, float shooterVx, float shooterVy, float maxVx, float maxVy, boolean isGood, float bearing, float damageValue){
         this.game = game;
-        width = 10;
 
         pos = new Vector2();
         pos.x = x;
@@ -59,6 +58,9 @@ public abstract class Bullet implements Disposable, Updatable {
 
         generateTexture();
         circleRepresentation = new Circle(pos.x, pos.y, width);
+
+        width = bulletTexture.getWidth();
+        height = bulletTexture.getHeight();
         // I removed circular representation because the circle's x,y values changed over time, so
         // the representation is created when it's needed.
     }
