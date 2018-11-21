@@ -2,12 +2,15 @@ package com.mygdx.projectiles;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.hellinspace.GameMain;
 
 public class HomingBullet extends Bullet {
     Vector2 targetPos, targetVel;
     private float maxV;
+
+    TextureRegion bulletTextureRegion; //need for rendering rotations
 
     public HomingBullet(GameMain game, float x, float y, float vx, float vy, float maxVx, float maxVy, boolean isGood, float bearing, float damageValue, Vector2 targetPos, Vector2 targetVel) {
         super(game, x, y, vx, vy, maxVx, maxVy, isGood, bearing, damageValue);
@@ -19,6 +22,10 @@ public class HomingBullet extends Bullet {
 
         //load custom laser sprite -- might need to scale this
         bulletTexture = new Texture(Gdx.files.internal("Projectiles\\redlaser.png"));
+        bulletTextureRegion = new TextureRegion(bulletTexture);
+
+        width = bulletTexture.getWidth();
+        height = bulletTexture.getHeight();
     }
 
     /**
@@ -50,6 +57,11 @@ public class HomingBullet extends Bullet {
         double targetX = targetPos.x - pos.x;
         double targetY = targetPos.y - pos.y;
         bearing += Math.atan2(targetY, targetX) * 180 / Math.PI;
+    }
+
+    @Override
+    public void render() {
+        game.batch.draw(bulletTexture, pos.x, pos.y);
     }
 
     public Vector2 getTargetPos() {

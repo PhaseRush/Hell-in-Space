@@ -19,7 +19,6 @@ public class HomingEnemy extends Enemy{
 
         GameScreen.updateManager.add(b);
     }
-
     //use default movement (for testing or whatever
 
 }

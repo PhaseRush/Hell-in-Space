@@ -74,7 +74,7 @@ public abstract class Enemy implements Disposable, Updatable {
 
     public void update(float delta){
 
-        render(delta);
+        render();
         move(delta);
 
         if(clock % shotFrequency == 0) {
@@ -87,6 +87,11 @@ public abstract class Enemy implements Disposable, Updatable {
 
     public void shoot(){
         Bullet b = new StandardEnemyBullet(game, pos.x + width/2, pos.y, v, false, projectileDamage);
+
+        //this is for testing
+        //        Bullet b = new HomingBullet(game, pos.x + width/2, pos.y, 10, 10, 50, 50,false, 0, projectileDamage,
+//                GameScreen.fighter.getPos(),
+//                GameScreen.fighter.getVel());
         GameScreen.updateManager.add(b);
     }
 
@@ -99,7 +104,7 @@ public abstract class Enemy implements Disposable, Updatable {
         return Intersector.overlaps(b.getBulletAsCircle(), new Rectangle(pos.x, pos.y, width, height));
     }
 
-    public void render(float delta) {
+    public void render() {
         game.batch.draw(enemyTexture, pos.x, pos.y);
     }
 
