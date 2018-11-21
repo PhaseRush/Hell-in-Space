@@ -51,7 +51,7 @@ public class SideEnemy extends Enemy {
     public void shoot(){
         if (clock % 400 < 200) {
             int vx = left ? 500 : -500;
-            Bullet b = new SideEnemyBullet(game, pos.x + width / 2, pos.y, false, projectileDamage, vx, 0);
+            Bullet b = new SideEnemyBullet(game, pos.x + width / 2, pos.y, false, projectileDamage, vx/10, 0);
             GameScreen.updateManager.add(b);
         }
     }

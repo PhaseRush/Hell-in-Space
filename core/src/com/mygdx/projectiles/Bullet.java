@@ -38,7 +38,7 @@ public abstract class Bullet implements Disposable, Updatable {
         initalV.y = shooterVy;
 
         this.maxV = new Vector2(maxVx, maxVy); //max velocity
-        actualV = new Vector2(30*initalV.x + maxV.x, 30*initalV.y + maxV.y);
+        actualV = new Vector2(10*initalV.x + maxV.x, 10*initalV.y + maxV.y);
 //        if (isGood) {
 //            System.out.println("Init   v : " + initalV.y);
 //            System.out.println("Max    v : " + maxV.y);

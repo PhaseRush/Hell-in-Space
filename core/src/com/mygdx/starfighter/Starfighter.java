@@ -102,14 +102,13 @@ public abstract class Starfighter implements Disposable, Updatable {
 
         Bullet bullet;
         if (rotationState == 0) {
-            bullet = new StandardBullet(game, pos.x + width/2, pos.y + height - 10, v.x, v.y, true, 0, projectileDamage);
-            System.out.println("init vy: " + v.y);
+            bullet = new StandardBullet(game, pos.x + width/2, pos.y + height - 10, v.x, v.y, 0, 50, true, 0, projectileDamage);
         } else if (rotationState == 1) {
-            bullet = new StandardBullet(game, pos.x + width, pos.y + height/2, v.x, v.y, true, 0, projectileDamage);
+            bullet = new StandardBullet(game, pos.x + width, pos.y + width/2, v.x, v.y, 50, 0, true, 90, projectileDamage);
         } else if (rotationState == 2) {
-            bullet = new StandardBullet(game, pos.x + width/2, pos.y +10, v.x, v.y, true, 0, projectileDamage);
+            bullet = new StandardBullet(game, pos.x + width/2, pos.y +10, v.x, v.y, 0, -50, true, 180, projectileDamage);
         } else { //rotationState == 3 -- also a catch block for invalid states
-            bullet = new StandardBullet(game, pos.x, pos.y + height/2, v.x, v.y, true, 0, projectileDamage);
+            bullet = new StandardBullet(game, pos.x, pos.y + width/2, v.x, v.y, -50, 0, true, 270, projectileDamage);
         }
 
         GameScreen.updateManager.add(bullet);
