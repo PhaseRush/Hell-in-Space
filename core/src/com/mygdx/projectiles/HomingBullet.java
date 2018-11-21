@@ -24,6 +24,7 @@ public class HomingBullet extends Bullet {
         bulletTexture = new Texture(Gdx.files.internal("Projectiles\\redlaser.png"));
         bulletTextureRegion = new TextureRegion(bulletTexture);
 
+        //testing -- should work
         width = bulletTexture.getWidth();
         height = bulletTexture.getHeight();
     }
@@ -59,9 +60,14 @@ public class HomingBullet extends Bullet {
         bearing += Math.atan2(targetY, targetX) * 180 / Math.PI;
     }
 
+    /**
+     * rendeirng the bullet with the rotation
+     * https://stackoverflow.com/questions/24748350/libgdx-rotate-a-texture-when-drawing-it-with-spritebatch
+     */
     @Override
     public void render() {
-        game.batch.draw(bulletTexture, pos.x, pos.y);
+        //game.batch.draw(bulletTexture, pos.x, pos.y); //super call
+        game.batch.draw(bulletTextureRegion, pos.x, pos.y, pos.x, pos.y, width, height, 1, 1, bearing);
     }
 
     public Vector2 getTargetPos() {

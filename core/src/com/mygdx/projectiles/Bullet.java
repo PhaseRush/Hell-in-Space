@@ -59,8 +59,10 @@ public abstract class Bullet implements Disposable, Updatable {
 
         generateTexture();
         circleRepresentation = new Circle(pos.x, pos.y, width);
-        width = bulletTexture.getWidth();
-        height = bulletTexture.getHeight();
+
+        //to test this
+        //width = bulletTexture.getWidth();
+        //height = bulletTexture.getHeight();
         // I removed circular representation because the circle's x,y values changed over time, so
         // the representation is created when it's needed.
     }

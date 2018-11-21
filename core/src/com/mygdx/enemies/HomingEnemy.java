@@ -13,9 +13,8 @@ public class HomingEnemy extends Enemy{
 
     @Override
     public void shoot(){
-        Bullet b = new HomingBullet(game, pos.x + width/2, pos.y, 10, 10, 50, 50,false, 0, projectileDamage,
-                GameScreen.fighter.getPos(),
-                GameScreen.fighter.getVel());
+        Bullet b = new HomingBullet(game, pos.x + width/2-10, pos.y, v.x, v.y, 0, -150, false, 180, projectileDamage,
+                GameScreen.fighter.getPos(), GameScreen.fighter.getVel());
 
         GameScreen.updateManager.add(b);
     }
