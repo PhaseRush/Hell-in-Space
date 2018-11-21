@@ -9,8 +9,8 @@ public class HomingBullet extends Bullet {
     Vector2 targetPos, targetVel;
     private float maxV;
 
-    public HomingBullet(GameMain game, float x, float y, float vx, float vy, float maxVx, float maxVy, boolean isGood, float bearing, float damageValue, Vector2 targetPos, Vector2 targetVel) {
-        super(game, x, y, vx, vy, maxVx, maxVy, isGood, bearing, damageValue);
+    public HomingBullet(GameMain game, float x, float y, float shooterVx, float shooterVy, float maxVx, float maxVy, boolean isGood, float bearing, float damageValue, Vector2 targetPos, Vector2 targetVel) {
+        super(game, x, y, shooterVx, shooterVy, maxVx, maxVy, isGood, bearing, damageValue);
 
         //set position and velocity of the target
         this.targetPos = targetPos;

@@ -99,10 +99,10 @@ public abstract class Bullet implements Disposable, Updatable {
 
         public void update(float delta){
         move(delta);
-        render(delta);
+        render();
     }
 
-    public void render(float delta) {
+    public void render() {
         game.batch.draw(bulletTexture, pos.x, pos.y);
     }
 

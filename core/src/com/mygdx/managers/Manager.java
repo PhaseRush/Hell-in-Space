@@ -62,6 +62,8 @@ public class Manager implements Updatable, Disposable {
         } else if (clock % enemyFrequency == 0 && numEnemies < maxEnemies) {//(clock % enemyFrequency == 0 && numEnemies < maxEnemies)
             addStandardEnemy();
             System.out.println(numEnemies);
+        } else if (clock == 120) {
+            addHomingEnemy();
         }
 
         for (Enemy enemy : enemies) {
@@ -121,6 +123,8 @@ public class Manager implements Updatable, Disposable {
         enemies.removeAll(enemiesToRemove);
     }
 
+
+
     public void add (Updatable up) {
         objects.add(up);
     }
@@ -140,8 +144,16 @@ public class Manager implements Updatable, Disposable {
         enemies.add(leftEnemy);
         enemies.add(rightEnemy);
 
-        game.batch.draw(leftEnemy.getEnemyTexture(), leftEnemy.getPos().x, leftEnemy.getPos().y);
-        game.batch.draw(rightEnemy.getEnemyTexture(), rightEnemy.getPos().x, rightEnemy.getPos().y);
+
+        leftEnemy.render();
+        rightEnemy.render();
+
+        //game.batch.draw(leftEnemy.getEnemyTexture(), leftEnemy.getPos().x, leftEnemy.getPos().y);
+        //game.batch.draw(rightEnemy.getEnemyTexture(), rightEnemy.getPos().x, rightEnemy.getPos().y);
+    }
+
+    private void addHomingEnemy() {
+
     }
 
     public void addStandardEnemy() {
@@ -151,7 +163,8 @@ public class Manager implements Updatable, Disposable {
 
         enemies.add(enemy);
 
-        game.batch.draw(enemy.getEnemyTexture(), enemy.getPos().x, enemy.getPos().y);
+        enemy.render();
+        //game.batch.draw(enemy.getEnemyTexture(), enemy.getPos().x, enemy.getPos().y);
     }
 
 }
