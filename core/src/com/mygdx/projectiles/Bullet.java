@@ -25,7 +25,7 @@ public abstract class Bullet implements Disposable, Updatable {
     protected Circle circleRepresentation;
     protected Color color;
 
-    public Bullet(GameMain game, float x, float y, float vx, float vy, float maxVx, float maxVy, boolean isGood, float bearing, float damageValue){
+    public Bullet(GameMain game, float x, float y, float shooterVx, float shooterVy, float maxVx, float maxVy, boolean isGood, float bearing, float damageValue){
         this.game = game;
         width = 10;
 
@@ -34,11 +34,16 @@ public abstract class Bullet implements Disposable, Updatable {
         pos.y = y;
 
         initalV = new Vector2();
-        initalV.x = vx;
-        initalV.y = vy;
+        initalV.x = shooterVx;
+        initalV.y = shooterVy;
 
         this.maxV = new Vector2(maxVx, maxVy); //max velocity
-        actualV = new Vector2(initalV.x + maxV.x, initalV.y + maxV.y);
+        actualV = new Vector2(30*initalV.x + maxV.x, 30*initalV.y + maxV.y);
+//        if (isGood) {
+//            System.out.println("Init   v : " + initalV.y);
+//            System.out.println("Max    v : " + maxV.y);
+//            System.out.println("Actual v : " + actualV.y);
+//        }
 
         this.bearing = bearing;
         this.damageValue = damageValue;

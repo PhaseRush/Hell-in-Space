@@ -13,7 +13,7 @@ import com.mygdx.starfighter.Starfighter;
 public class GameScreen implements Screen {
     final GameMain game;
 
-    int frameCount = 0;
+    public static int frameCount = 0;
     Starfield starfield;
 
     OrthographicCamera camera;

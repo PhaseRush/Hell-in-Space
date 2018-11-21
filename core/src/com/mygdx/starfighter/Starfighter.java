@@ -98,15 +98,18 @@ public abstract class Starfighter implements Disposable, Updatable {
 
     //todo might want to mess around with pos.x and pos.y -- Currently not centered or smth?
     private void shoot() { //just add to the updateManager
+        if (GameScreen.frameCount % 5 != 0) return; //can only shoot once every 10 frames
+
         Bullet bullet;
         if (rotationState == 0) {
-            bullet = new StandardBullet(game, pos.x + width/2, pos.y + height - 10, true, projectileDamage);
+            bullet = new StandardBullet(game, pos.x + width/2, pos.y + height - 10, v.x, v.y, true, 0, projectileDamage);
+            System.out.println("init vy: " + v.y);
         } else if (rotationState == 1) {
-            bullet = new StandardBullet(game, pos.x + width, pos.y + height/2, true, projectileDamage);
+            bullet = new StandardBullet(game, pos.x + width, pos.y + height/2, v.x, v.y, true, 0, projectileDamage);
         } else if (rotationState == 2) {
-            bullet = new StandardBullet(game, pos.x + width/2, pos.y +10, true, projectileDamage);
+            bullet = new StandardBullet(game, pos.x + width/2, pos.y +10, v.x, v.y, true, 0, projectileDamage);
         } else { //rotationState == 3 -- also a catch block for invalid states
-            bullet = new StandardBullet(game, pos.x, pos.y + height/2, true, projectileDamage);
+            bullet = new StandardBullet(game, pos.x, pos.y + height/2, v.x, v.y, true, 0, projectileDamage);
         }
 
         GameScreen.updateManager.add(bullet);
