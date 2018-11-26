@@ -27,6 +27,7 @@ public class HomingBullet extends Bullet {
         //testing -- should work
         width = bulletTexture.getWidth();
         height = bulletTexture.getHeight();
+        System.out.println("Bearing on creation: " + bearing);
     }
 
     /**
