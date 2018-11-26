@@ -27,7 +27,8 @@ public abstract class Starfighter implements Disposable, Updatable {
     //other
     private float projectileDamage;
 
-    private int health, energy; //might add shield mechanic
+    private int health;
+    private double energy; //might add shield mechanic
 
     Texture fighter, upStarfighter, rightStarfighter, leftStarfighter, downStarfighter;
 
@@ -69,7 +70,7 @@ public abstract class Starfighter implements Disposable, Updatable {
 
         //stats
         health = 100;
-        energy = 60;
+        energy = 600;
         projectileDamage = 10;
 
         //movement
@@ -244,12 +245,20 @@ public abstract class Starfighter implements Disposable, Updatable {
         return v;
     }
 
+    public Vector2 getAcceleration() {
+        return a;
+    }
+
     public int getHealth() {
         return health;
     }
 
-    public int getEnergy() {
+    public double getEnergy() {
         return energy;
+    }
+
+    public void setEnergy(double change) {
+        energy = change;
     }
 
     public void dispose(){

@@ -16,11 +16,15 @@ public class PlayerHUD implements Disposable {
 
     Texture healthBar, energyBar;
     private float healthPercent = 1; //0 = 0%, 1 = 100%
-    private float energyPercent = 1; //0 = 0%, 1 = 100%
+    private double energyPercent = 1; //0 = 0%, 1 = 100%
 
-    private int totalTime;
+    private float margin = 0.1f;
+    private double energyLossWhileMoving = 0.01;
+
+    private int totalTime, score;
 
     public PlayerHUD(final GameMain game, Starfighter fighter) {
+
         this.game = game;
         this.fighter = fighter;
 
@@ -29,29 +33,9 @@ public class PlayerHUD implements Disposable {
     }
 
     public void show(float delta) {
-        if (healthPercent > 0) {
-            game.batch.draw(healthBar, gameWidth / 2 - healthBar.getWidth() / 2, gameHeight - 20, healthBar.getWidth() * healthPercent, 8);
 
-        }
-        if (energyPercent > 0) {
-            game.batch.draw(energyBar, gameWidth / 2 - energyBar.getWidth() / 2, gameHeight - 40, energyBar.getWidth() * energyPercent, 8);
-        }
-
-        totalTime++;
-
-        int seconds = (totalTime) / 60;
-
-        BitmapFont font = new BitmapFont();
-        font.setColor(Color.WHITE);
-        font.draw(game.batch, Float.toString(seconds), gameWidth - energyBar.getWidth() / 2, gameHeight - energyBar.getHeight() / 2 - 5);
-
-    }
-
-    public void updateScore(int score) {
-
-        BitmapFont font = new BitmapFont();
-        font.setColor(Color.WHITE);
-        font.draw(game.batch, "Score: " + score, gameWidth - energyBar.getWidth() / 2, gameHeight - energyBar.getHeight() / 2 - 20);
+        update();
+        render();
 
     }
 
@@ -59,8 +43,41 @@ public class PlayerHUD implements Disposable {
         healthPercent -= damage/fighter.getHealth();
     }
 
-    public void loseEnergy(float loss) {
-        energyPercent -= loss/fighter.getEnergy();
+    public void loseEnergy(double loss) {
+        fighter.setEnergy(fighter.getEnergy() - loss);
+        energyPercent = fighter.getEnergy()/600;
+    }
+
+    public void update() {
+
+        if (!fighter.getAcceleration().isZero(margin)) {
+            loseEnergy(energyLossWhileMoving);
+        }
+
+        totalTime++;
+    }
+
+    public void render() {
+
+        if (healthPercent > 0) {
+            game.batch.draw(healthBar, gameWidth / 2 - healthBar.getWidth() / 2, gameHeight - 20, healthBar.getWidth() * healthPercent, 8);
+        }
+
+        if (energyPercent > 0) {
+            game.batch.draw(energyBar, gameWidth / 2 - energyBar.getWidth() / 2, gameHeight - 40, energyBar.getWidth() * (float)energyPercent, 8);
+        }
+
+        int seconds = (totalTime) / 60;
+
+        BitmapFont font = new BitmapFont();
+        font.setColor(Color.WHITE);
+        font.draw(game.batch, Float.toString(seconds), gameWidth - energyBar.getWidth() / 2, gameHeight - energyBar.getHeight() / 2 - 5);
+
+        font.draw(game.batch, "Score: " + score, gameWidth - energyBar.getWidth() / 2, gameHeight - energyBar.getHeight() / 2 - 20);
+    }
+
+    public void setScore(int s) {
+        score += s;
     }
 
     @Override

@@ -22,7 +22,7 @@ public class Manager implements Updatable, Disposable {
     Set<Enemy> enemies = new HashSet<>();
     GameMain game;
     Starfighter fighter;
-    private int clock,enemyFrequency,sideEnemyFrequency,maxEnemies,numEnemies,score, maxSideEnemies, numSideEnemies;
+    private int clock,enemyFrequency,sideEnemyFrequency,maxEnemies,numEnemies, maxSideEnemies, numSideEnemies;
     PlayerHUD hud;
 
     Texture endGame;
@@ -42,8 +42,6 @@ public class Manager implements Updatable, Disposable {
         // How many side enemy pairs are allowed at once
         maxSideEnemies = 2;
         numSideEnemies = 0;
-
-        score = 0;
     }
 
     @Override
@@ -62,7 +60,7 @@ public class Manager implements Updatable, Disposable {
             addSideEnemy();
         } else if (clock % enemyFrequency == 0 && numEnemies < maxEnemies) {//(clock % enemyFrequency == 0 && numEnemies < maxEnemies)
             addStandardEnemy();
-            System.out.println(numEnemies);
+            //System.out.println(numEnemies);
         } else if (clock == 120) {
             addHomingEnemy();
         }
@@ -72,10 +70,6 @@ public class Manager implements Updatable, Disposable {
             if (enemy.hasDied()) {
                 enemiesToRemove.add(enemy);
 
-                // went off screen
-                if (score > 0) {
-                    score--;
-                }
 // side enemies
                 numEnemies--;
             }
@@ -93,7 +87,6 @@ public class Manager implements Updatable, Disposable {
                         if (fighter.getHealth() > 0) {
                             fighter.decreaseHealth(((Bullet) object).getDamageValue());
                             hud.takeDamage(((Bullet) object).getDamageValue());
-                            hud.show(delta);
                         }
                     }
                 } else { //check enemies collision
@@ -116,8 +109,8 @@ public class Manager implements Updatable, Disposable {
             }
         }
 
-        score += enemiesToRemove.size();
-        hud.updateScore(score);
+        hud.setScore(enemiesToRemove.size());
+        hud.show(delta);
 
         objects.removeAll(toRemove);
         numEnemies -= enemiesToRemove.size();
