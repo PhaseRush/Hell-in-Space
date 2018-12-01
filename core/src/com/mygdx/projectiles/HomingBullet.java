@@ -69,6 +69,7 @@ public class HomingBullet extends Bullet {
     public void render() {
         //game.batch.draw(bulletTexture, pos.x, pos.y); //super call
         game.batch.draw(bulletTextureRegion, pos.x, pos.y, pos.x, pos.y, width, height, 1, 1, bearing);
+        game.batch.draw(bulletTexture, pos.x, pos.y);
     }
 
     public Vector2 getTargetPos() {

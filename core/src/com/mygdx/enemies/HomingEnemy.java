@@ -1,5 +1,7 @@
 package com.mygdx.enemies;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.hellinspace.GameMain;
 import com.mygdx.projectiles.Bullet;
 import com.mygdx.projectiles.HomingBullet;
@@ -9,7 +11,29 @@ public class HomingEnemy extends Enemy{
 
     public HomingEnemy(GameMain game) {
         super(game);
+        enemyTexture = new Texture(Gdx.files.internal("Enemies/UpEnemy.png"));
     }
+
+
+//    public HomingEnemy(GameMain game) {
+//        super(game);
+//    }
+
+
+    @Override
+    public void update(float delta){
+
+        render();
+        move(delta);
+
+        if(clock == 10) {
+            shoot();
+            System.out.println("Homing shot");
+        }
+
+        clock++;
+    }
+
 
     @Override
     public void shoot(){

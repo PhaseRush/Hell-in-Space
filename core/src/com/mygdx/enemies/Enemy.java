@@ -41,7 +41,6 @@ public abstract class Enemy implements Disposable, Updatable {
     protected int clock;
 
     public Enemy(GameMain game) {
-
         this.game = game;
 
         // Get Texture
@@ -73,16 +72,13 @@ public abstract class Enemy implements Disposable, Updatable {
     }
 
     public void update(float delta){
-
-        render();
         move(delta);
 
         if(clock % shotFrequency == 0) {
             shoot();
         }
-
+        render();
         clock++;
-
     }
 
     public void shoot(){
