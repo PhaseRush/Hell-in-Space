@@ -63,16 +63,9 @@ public class Manager implements Updatable, Disposable {
         } else if (clock % enemyFrequency == 0 && numEnemies < maxEnemies) {//(clock % enemyFrequency == 0 && numEnemies < maxEnemies)
             addStandardEnemy();
             //System.out.println("num enemies: " + numEnemies);
+        } else if (clock == 120) {
+            addHomingEnemy();
         }
-//        else if (clock == 120) {
-//            addHomingEnemy();
-//        }
-
-        //no homing enemies for github gameoff :(
-//        if (clock == 100) {
-//            addHomingEnemy();
-//            System.out.println("SPAWNED HOMING ENEMY");
-//        }
 
         for (Enemy enemy : enemies) {
             enemy.update(delta);
@@ -100,6 +93,7 @@ public class Manager implements Updatable, Disposable {
                         if (fighter.getHealth() > 0) {
                             fighter.decreaseHealth(((Bullet) object).getDamageValue());
                             hud.takeDamage(((Bullet) object).getDamageValue());
+                            hud.show(delta);
                         }
                     }
                 } else { //check enemies collision
@@ -123,11 +117,12 @@ public class Manager implements Updatable, Disposable {
         }
 
         score += enemiesToRemove.size();
-        hud.updateScore(score);
+        hud.setScore(score);
 
         objects.removeAll(toRemove);
         numEnemies -= enemiesToRemove.size();
         enemies.removeAll(enemiesToRemove);
+        score = 0;
     }
 
 
