@@ -64,6 +64,9 @@ public class Manager implements Updatable, Disposable {
             addStandardEnemy();
             //System.out.println("num enemies: " + numEnemies);
         }
+//        else if (clock == 120) {
+//            addHomingEnemy();
+//        }
 
         //no homing enemies for github gameoff :(
 //        if (clock == 100) {
@@ -97,12 +100,11 @@ public class Manager implements Updatable, Disposable {
                         if (fighter.getHealth() > 0) {
                             fighter.decreaseHealth(((Bullet) object).getDamageValue());
                             hud.takeDamage(((Bullet) object).getDamageValue());
-                            hud.show(delta);
                         }
                     }
                 } else { //check enemies collision
                     //could easily optimize with x and vx etc.
-                    // = something
+                     // = something
                     for (Enemy enemy : enemies) {
                         if (enemy.checkCollision((Bullet) object)) {
                             toRemove.add(object); //remove bullet
@@ -152,7 +154,11 @@ public class Manager implements Updatable, Disposable {
 
     private void addHomingEnemy() {
         numEnemies++;
-        enemies.add(new HomingEnemy(game));
+
+        Enemy enemy = new HomingEnemy(game);
+
+        enemies.add(enemy);
+
     }
 
     public void addStandardEnemy() {
