@@ -11,7 +11,7 @@ public class HomingEnemy extends Enemy{
 
     public HomingEnemy(GameMain game) {
         super(game);
-        enemyTexture = new Texture(Gdx.files.internal("Enemies/UpEnemy.png"));
+        enemyTexture = new Texture(Gdx.files.internal("core/assets/Enemies/UpEnemy.png"));
     }
 
 

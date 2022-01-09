@@ -28,8 +28,8 @@ public class PlayerHUD implements Disposable {
         this.game = game;
         this.fighter = fighter;
 
-        healthBar = new Texture("HUD/Health.png");
-        energyBar = new Texture("HUD/Energy.png");
+        healthBar = new Texture("core/assets/HUD/Health.png");
+        energyBar = new Texture("core/assets/HUD/Energy.png");
     }
 
     public void show(float delta) {

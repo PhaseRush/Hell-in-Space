@@ -32,7 +32,7 @@ public class Manager implements Updatable, Disposable {
         this.fighter = fighter;
         this.hud = hud;
 
-        endGame = new Texture("EndGame.png");
+        endGame = new Texture("core/assets/EndGame.png");
 
         clock = 0;
         enemyFrequency = 60;

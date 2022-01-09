@@ -24,7 +24,7 @@ public class MainMenuScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, gameWidth, gameHeight);
 
-        Texture introScreen = new Texture("blackpurple.png");
+        Texture introScreen = new Texture("core/assets/blackpurple.png");
         introScreenSprite = createScaledSprite(introScreen);
     }
 

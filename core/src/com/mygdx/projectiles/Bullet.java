@@ -113,7 +113,7 @@ public abstract class Bullet implements Disposable, Updatable {
     public void move(float delta) {
         //initalV.mulAdd(maxV, delta); //added
         //initalV.y += maxV.y;
-        pos.mulAdd(actualV, delta);
+        pos.mulAdd(actualV, delta*10);
     }
 
     private void generateTexture(){

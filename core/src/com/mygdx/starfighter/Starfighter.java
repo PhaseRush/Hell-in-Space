@@ -51,10 +51,10 @@ public abstract class Starfighter implements Disposable, Updatable {
         this.game = game;
 
         //sprite stuff
-        upStarfighter = new Texture(Gdx.files.internal("Starfighter/UpStarfighter.png"));
-        rightStarfighter = new Texture(Gdx.files.internal("Starfighter/RightStarfighter.png"));
-        leftStarfighter = new Texture(Gdx.files.internal("Starfighter/LeftStarfighter.png"));
-        downStarfighter = new Texture(Gdx.files.internal("Starfighter/DownStarfighter.png"));
+        upStarfighter = new Texture(Gdx.files.internal("core/assets/Starfighter/UpStarfighter.png"));
+        rightStarfighter = new Texture(Gdx.files.internal("core/assets/Starfighter/RightStarfighter.png"));
+        leftStarfighter = new Texture(Gdx.files.internal("core/assets/Starfighter/LeftStarfighter.png"));
+        downStarfighter = new Texture(Gdx.files.internal("core/assets/Starfighter/DownStarfighter.png"));
         fighter = upStarfighter; //init the regular fighter so not null on first render
 
         width = upStarfighter.getWidth();

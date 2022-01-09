@@ -19,11 +19,11 @@ public class SideEnemy extends Enemy {
 
         // Get Texture
         if (left) {
-            enemyTexture = new Texture(Gdx.files.internal("Enemies/RightEnemy.png"));
+            enemyTexture = new Texture(Gdx.files.internal("core/assets/Enemies/RightEnemy.png"));
             width = enemyTexture.getWidth();
             height = enemyTexture.getHeight();
         } else {
-            enemyTexture = new Texture(Gdx.files.internal("Enemies/LeftEnemy.png"));
+            enemyTexture = new Texture(Gdx.files.internal("core/assets/Enemies/LeftEnemy.png"));
             width = enemyTexture.getWidth();
             height = enemyTexture.getHeight();
         }

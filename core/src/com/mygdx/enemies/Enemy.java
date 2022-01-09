@@ -44,7 +44,7 @@ public abstract class Enemy implements Disposable, Updatable {
         this.game = game;
 
         // Get Texture
-        enemyTexture = new Texture(Gdx.files.internal("Enemies/DownEnemy.png"));
+        enemyTexture = new Texture(Gdx.files.internal("core/assets/Enemies/DownEnemy.png"));
         width = enemyTexture.getWidth();
         height = enemyTexture.getHeight();
 
